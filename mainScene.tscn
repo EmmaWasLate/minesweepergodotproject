@@ -23,5 +23,6 @@ tile_map_data = PackedByteArray("AAABAAcAAAAAAAAAAAACAAcAAAAAAAAAAAADAAcAAAAAAAA
 tile_set = SubResource("TileSet_6mfv6")
 
 [node name="manager" type="Node2D" parent="." node_paths=PackedStringArray("tilemaplayer")]
+position = Vector2(14, 23)
 script = ExtResource("2_hr5et")
 tilemaplayer = NodePath("../TileMapLayer")
