@@ -11,9 +11,8 @@ config_version=5
 [application]
 
 config/name="minesweeper"
-run/main_scene="res://mainScene.tscn"
+run/main_scene="res://Stages/EasyLevel/Scenes/EasyLevel.tscn"
 config/features=PackedStringArray("4.5", "C#", "GL Compatibility")
-config/icon="res://icon.svg"
 
 [dotnet]
 

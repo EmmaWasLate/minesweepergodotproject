@@ -1,10 +1,10 @@
 [gd_scene load_steps=5 format=4 uid="uid://kttghbn3dhac"]
 
-[ext_resource type="Texture2D" uid="uid://mcoebx6hes4w" path="res://tilesets/tileset.png" id="1_g4qto"]
-[ext_resource type="Script" uid="uid://dawh0ekn0kbs1" path="res://Manager.cs" id="2_hr5et"]
+[ext_resource type="Texture2D" uid="uid://mcoebx6hes4w" path="res://Common/GameTilesets/tileset.png" id="1_owvu2"]
+[ext_resource type="Script" uid="uid://dawh0ekn0kbs1" path="res://Entitys/Manager/Manager.cs" id="2_b0p6y"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_61od6"]
-texture = ExtResource("1_g4qto")
+texture = ExtResource("1_owvu2")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -24,5 +24,5 @@ tile_set = SubResource("TileSet_6mfv6")
 
 [node name="manager" type="Node2D" parent="." node_paths=PackedStringArray("tilemaplayer")]
 position = Vector2(-1, 2)
-script = ExtResource("2_hr5et")
+script = ExtResource("2_b0p6y")
 tilemaplayer = NodePath("../TileMapLayer")

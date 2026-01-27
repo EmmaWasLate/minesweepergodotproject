@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dc0tqs3w1wecd"]
+
+[ext_resource type="Script" uid="uid://dawh0ekn0kbs1" path="res://Entitys/Manager/Manager.cs" id="1_khpen"]
+
+[node name="manager" type="Node2D" node_paths=PackedStringArray("tilemaplayer")]
+script = ExtResource("1_khpen")
+tilemaplayer = NodePath("")
