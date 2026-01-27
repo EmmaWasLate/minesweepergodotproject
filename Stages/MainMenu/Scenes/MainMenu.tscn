@@ -11,7 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Menu" type="MarginContainer" parent="."]
+[node name="Menu" type="MarginContainer" parent="." node_paths=PackedStringArray("baseMenuContainer", "newGameButton", "difficultyMenuContainer", "easyOption", "mediumOption", "hardOption", "customOption")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,6 +19,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_upgdd")
+baseMenuContainer = NodePath("BaseMenu")
+newGameButton = NodePath("BaseMenu/Center/VBoxContainer/NewGame/Button")
+difficultyMenuContainer = NodePath("DifficultyMenu")
+easyOption = NodePath("DifficultyMenu/Center/HBoxContainer/EasyOption/Button")
+mediumOption = NodePath("DifficultyMenu/Center/HBoxContainer/MediumOption/Button")
+hardOption = NodePath("DifficultyMenu/Center/HBoxContainer/HardOption/Button")
+customOption = NodePath("DifficultyMenu/Center/HBoxContainer/CustomOption/Button")
 
 [node name="BaseMenu" type="MarginContainer" parent="Menu"]
 layout_mode = 2
@@ -52,6 +59,7 @@ grow_vertical = 2
 text = "New Game"
 
 [node name="DifficultyMenu" type="MarginContainer" parent="Menu"]
+visible = false
 layout_mode = 2
 
 [node name="Center" type="MarginContainer" parent="Menu/DifficultyMenu"]
@@ -62,7 +70,7 @@ size_flags_vertical = 4
 [node name="HBoxContainer" type="HBoxContainer" parent="Menu/DifficultyMenu/Center"]
 layout_mode = 2
 
-[node name="DifficultyOption" type="NinePatchRect" parent="Menu/DifficultyMenu/Center/HBoxContainer"]
+[node name="EasyOption" type="NinePatchRect" parent="Menu/DifficultyMenu/Center/HBoxContainer"]
 texture_filter = 1
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
@@ -73,7 +81,7 @@ patch_margin_top = 1
 patch_margin_right = 1
 patch_margin_bottom = 1
 
-[node name="Button" type="Button" parent="Menu/DifficultyMenu/Center/HBoxContainer/DifficultyOption"]
+[node name="Button" type="Button" parent="Menu/DifficultyMenu/Center/HBoxContainer/EasyOption"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -82,3 +90,67 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Easy
 "
+
+[node name="MediumOption" type="NinePatchRect" parent="Menu/DifficultyMenu/Center/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+texture = ExtResource("1_bjh4i")
+region_rect = Rect2(0, 0, 16, 16)
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+
+[node name="Button" type="Button" parent="Menu/DifficultyMenu/Center/HBoxContainer/MediumOption"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Medium
+"
+
+[node name="HardOption" type="NinePatchRect" parent="Menu/DifficultyMenu/Center/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+texture = ExtResource("1_bjh4i")
+region_rect = Rect2(0, 0, 16, 16)
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+
+[node name="Button" type="Button" parent="Menu/DifficultyMenu/Center/HBoxContainer/HardOption"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Hard
+"
+
+[node name="CustomOption" type="NinePatchRect" parent="Menu/DifficultyMenu/Center/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+texture = ExtResource("1_bjh4i")
+region_rect = Rect2(0, 0, 16, 16)
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+
+[node name="Button" type="Button" parent="Menu/DifficultyMenu/Center/HBoxContainer/CustomOption"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Custom"
+
+[connection signal="button_down" from="Menu/BaseMenu/Center/VBoxContainer/NewGame/Button" to="Menu" method="_ButtonDown_NewGame"]
