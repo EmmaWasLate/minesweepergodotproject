@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://b1hyy5g4usr87"]
+[gd_scene load_steps=2 format=3 uid="uid://b1hyy5g4usr87"]
+
+[ext_resource type="Texture2D" uid="uid://mcoebx6hes4w" path="res://Common/GameTilesets/tileset.png" id="1_bjh4i"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -7,3 +9,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Menu" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Center" type="MarginContainer" parent="Menu"]
+layout_mode = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Menu/Center"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("1_bjh4i")
+region_rect = Rect2(0, 0, 16, 16)
