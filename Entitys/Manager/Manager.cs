@@ -1,23 +1,70 @@
 using Godot;
 using System;
+using System.Runtime.Serialization;
 
 public partial class Manager : Node2D
 {
 	[Export] public TileMapLayer tilemaplayer;
-	public override void _Ready()
+
+	public void CreateTileMap(Vector2I mapSize)
 	{
-		float xScaling = (DisplayServer.WindowGetSize().X - 100) / (Singleton.MapSizes.easy.X * 16);
-		float yScaling = (DisplayServer.WindowGetSize().Y - 100) / (Singleton.MapSizes.easy.Y * 16);
-		
-		if (xScaling < yScaling)
+		int xOffset = (mapSize.X/2);
+		int yOffset = (mapSize.Y/2);
+		for (int i = 0; i < mapSize.X; i++)
 		{
-			tilemaplayer.Scale = new(xScaling, xScaling);
-		} else
-		{
-			tilemaplayer.Scale = new(yScaling, yScaling);
+			for (int j = 0; j < mapSize.Y; j++)
+			{
+				tilemaplayer.SetCell(new(i - xOffset, j - yOffset), 0, new(0, 0));
+			}
 		}
 
-		tilemaplayer.Position = new (DisplayServer.WindowGetSize().X/2, DisplayServer.WindowGetSize().Y/2);
+		tilemaplayer.SetCell(new(0, 0), 0, new(0, 0));
+	}
+
+	public void PositionTileMap(Vector2I mapSize)
+	{
+		//Cria a variavel de Scaling de x e y
+		float xScaling = ((float)DisplayServer.WindowGetSize().X - 100) / (mapSize.X * 16);
+		float yScaling = ((float)DisplayServer.WindowGetSize().Y - 100) / (mapSize.Y * 16);
+		float scaling = 0;
+		//Verifica qual Scaling eh menor e aplica no tilemap
+		if (xScaling < yScaling)
+		{
+			scaling = xScaling;
+		} else
+		{
+			scaling = yScaling;
+		}
+
+		tilemaplayer.Scale = new(scaling, scaling);
+
+		//Posiciona o tilemap no centro da tela
+		float xPosition = 0;
+		float yPosition = 0;
+
+		if (mapSize.X % 2 != 0)
+		{
+			xPosition = (float)DisplayServer.WindowGetSize().X/2 - (float)(.5 * scaling * 16);
+		} else
+		{
+			xPosition = (float)DisplayServer.WindowGetSize().X/2;
+		}
+
+		if (mapSize.Y % 2 != 0)
+		{
+			yPosition = (float)DisplayServer.WindowGetSize().Y/2 - (float)(.5 * scaling * 16);
+		} else
+		{
+			yPosition = (float)DisplayServer.WindowGetSize().Y/2;
+		}
+
+		tilemaplayer.Position = new (xPosition, yPosition);
+	}
+
+	public override void _Ready()
+	{
+		CreateTileMap(Singleton.MapSizes.medium);
+		PositionTileMap(Singleton.MapSizes.medium);
 	}
 	
 	public override void _Process(double delta)

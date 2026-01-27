@@ -5,7 +5,7 @@ public partial class Singleton : Node
 {
 	public class MapSizes
 	{
-		public static readonly Vector2 easy = new(10, 8);
-		public static readonly Vector2 medium = new(12, 16);
+		public static readonly Vector2I easy = new(10, 8);
+		public static readonly Vector2I medium = new(16, 12);
 	}
 }
