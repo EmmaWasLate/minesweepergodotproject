@@ -15,7 +15,6 @@ sources/0 = SubResource("TileSetAtlasSource_61od6")
 [node name="Node2D" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-145, -33)
 anchor_mode = 0
 enabled = false
 
@@ -24,6 +23,6 @@ tile_map_data = PackedByteArray("AAABAAcAAAAAAAAAAAACAAcAAAAAAAAAAAADAAcAAAAAAAA
 tile_set = SubResource("TileSet_6mfv6")
 
 [node name="manager" type="Node2D" parent="." node_paths=PackedStringArray("tilemaplayer")]
-position = Vector2(14, 23)
+position = Vector2(-1, 0)
 script = ExtResource("2_hr5et")
 tilemaplayer = NodePath("../TileMapLayer")
