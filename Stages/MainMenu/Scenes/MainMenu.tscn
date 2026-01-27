@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b1hyy5g4usr87"]
+[gd_scene load_steps=3 format=3 uid="uid://b1hyy5g4usr87"]
 
 [ext_resource type="Texture2D" uid="uid://mcoebx6hes4w" path="res://Common/GameTilesets/tileset.png" id="1_bjh4i"]
+[ext_resource type="Script" uid="uid://65yrc48vepk1" path="res://Entitys/UI/MainMenu.cs" id="1_upgdd"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -11,15 +12,73 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Menu" type="MarginContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_upgdd")
 
-[node name="Center" type="MarginContainer" parent="Menu"]
+[node name="BaseMenu" type="MarginContainer" parent="Menu"]
 layout_mode = 2
 
-[node name="NinePatchRect" type="NinePatchRect" parent="Menu/Center"]
+[node name="Center" type="MarginContainer" parent="Menu/BaseMenu"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/BaseMenu/Center"]
+layout_mode = 2
+
+[node name="NewGame" type="NinePatchRect" parent="Menu/BaseMenu/Center/VBoxContainer"]
 texture_filter = 1
+custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 texture = ExtResource("1_bjh4i")
 region_rect = Rect2(0, 0, 16, 16)
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+
+[node name="Button" type="Button" parent="Menu/BaseMenu/Center/VBoxContainer/NewGame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "New Game"
+
+[node name="DifficultyMenu" type="MarginContainer" parent="Menu"]
+layout_mode = 2
+
+[node name="Center" type="MarginContainer" parent="Menu/DifficultyMenu"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/DifficultyMenu/Center"]
+layout_mode = 2
+
+[node name="DifficultyOption" type="NinePatchRect" parent="Menu/DifficultyMenu/Center/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+texture = ExtResource("1_bjh4i")
+region_rect = Rect2(0, 0, 16, 16)
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+
+[node name="Button" type="Button" parent="Menu/DifficultyMenu/Center/HBoxContainer/DifficultyOption"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Easy
+"
