@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="minesweeper"
-run/main_scene="res://Stages/EasyLevel/Scenes/EasyLevel.tscn"
+run/main_scene="uid://b1hyy5g4usr87"
 config/features=PackedStringArray("4.5", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 Singleton="*res://Globals/Singleton.cs"
+SceneManager="*res://Globals/SceneManager.cs"
 
 [display]
 

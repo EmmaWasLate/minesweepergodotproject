@@ -23,5 +23,6 @@ texture_filter = 1
 tile_set = SubResource("TileSet_6mfv6")
 
 [node name="manager" type="Node2D" parent="." node_paths=PackedStringArray("tilemaplayer")]
+unique_name_in_owner = true
 script = ExtResource("2_b0p6y")
 tilemaplayer = NodePath("../TileMapLayer")

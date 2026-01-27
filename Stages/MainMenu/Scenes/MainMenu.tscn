@@ -58,6 +58,26 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "New Game"
 
+[node name="CustomizeTheme" type="NinePatchRect" parent="Menu/BaseMenu/Center/VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+texture = ExtResource("1_bjh4i")
+region_rect = Rect2(0, 0, 16, 16)
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+
+[node name="Button" type="Button" parent="Menu/BaseMenu/Center/VBoxContainer/CustomizeTheme"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Customize Theme"
+
 [node name="DifficultyMenu" type="MarginContainer" parent="Menu"]
 visible = false
 layout_mode = 2
@@ -154,3 +174,5 @@ grow_vertical = 2
 text = "Custom"
 
 [connection signal="button_down" from="Menu/BaseMenu/Center/VBoxContainer/NewGame/Button" to="Menu" method="_ButtonDown_NewGame"]
+[connection signal="button_down" from="Menu/DifficultyMenu/Center/HBoxContainer/EasyOption/Button" to="Menu" method="_ButtonDown_SelectDifficulty" binds= [0]]
+[connection signal="button_down" from="Menu/DifficultyMenu/Center/HBoxContainer/MediumOption/Button" to="Menu" method="_ButtonDown_SelectDifficulty" binds= [1]]

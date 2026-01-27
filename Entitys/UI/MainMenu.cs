@@ -3,6 +3,7 @@ using System;
 
 public partial class MainMenu : MarginContainer
 {
+
 	[ExportGroup("BaseMenu")]
 	[Export] public MarginContainer baseMenuContainer;	
 	[Export] public Button newGameButton;
@@ -22,6 +23,6 @@ public partial class MainMenu : MarginContainer
 
 	public void _ButtonDown_SelectDifficulty(int difficulty)
 	{
-		
+		GetNode<SceneManager>("/root/SceneManager").StartMainLevel((Singleton.Difficulty)difficulty);
 	}
 }

@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using System.Runtime.Serialization;
 
 public partial class Manager : Node2D
 {
@@ -19,6 +17,8 @@ public partial class Manager : Node2D
 		}
 
 		tilemaplayer.SetCell(new(0, 0), 0, new(0, 0));
+
+		PositionTileMap(mapSize);
 	}
 
 	public void PositionTileMap(Vector2I mapSize)
@@ -59,15 +59,17 @@ public partial class Manager : Node2D
 		}
 
 		tilemaplayer.Position = new (xPosition, yPosition);
+		
 	}
 
-	public override void _Ready()
+	public void StartGame(Singleton.Difficulty difficulty, Vector2I customDifficultySize = new())
 	{
-		CreateTileMap(Singleton.MapSizes.medium);
-		PositionTileMap(Singleton.MapSizes.medium);
-	}
-	
-	public override void _Process(double delta)
-	{
+		//se o tamanho do custom for maior que zero, usa ele, se não, usa o da dificuldde
+		Vector2I mapSize = 
+		(customDifficultySize > Vector2I.Zero)
+			? customDifficultySize
+			: Singleton.MapSizes.DifficultyToMapSize(difficulty);
+			
+		CreateTileMap(mapSize);
 	}
 }

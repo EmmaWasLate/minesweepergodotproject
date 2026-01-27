@@ -4,13 +4,14 @@ using System;
 
 public partial class Singleton : Node
 {
-	// organiza as dificuldades em numeros inteiros, começando no 0.
-	public static Dictionary<int, Vector2I> gameDifficulty = new Dictionary<int, Vector2I>
-	{
-		{0 , MapSizes.easy},
-		{1 , MapSizes.medium},
-	};
-			
+	// enums são integers chiques.
+	public enum Difficulty{
+		easy, // valor: 0
+		medium, // valor: 1
+		hard, // valor: 2
+		custom, // valor: 3
+	}
+
 	public class MapSizes
 	{
 		public static readonly Vector2I easy = new(10, 8);
@@ -20,9 +21,17 @@ public partial class Singleton : Node
 		
 		// retorna o tamanho de um mapa de acordo com a dificuldade passada.
 		// faz o mesmo que dictionary<Tkey,TValue>[key], porem mais legivel.
-		public static Vector2I DifficultyToMapSize(int difficulty)
+		public static Vector2I DifficultyToMapSize(Difficulty difficulty)
 		{
 			return gameDifficulty[difficulty];
-		}	
+		}
+
+	// organiza as dificuldades de acordo com seus enums.
+	public static Dictionary<Difficulty, Vector2I> gameDifficulty = new Dictionary<Difficulty, Vector2I>
+	{
+		{Difficulty.easy , MapSizes.easy},
+		{Difficulty.medium , MapSizes.medium},
+	};
+	
 	}
 }
