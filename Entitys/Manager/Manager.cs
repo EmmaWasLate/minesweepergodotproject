@@ -62,14 +62,9 @@ public partial class Manager : Node2D
 		
 	}
 
-	public void StartGame(Singleton.Difficulty difficulty, Vector2I customDifficultySize = new())
-	{
-		//se o tamanho do custom for maior que zero, usa ele, se não, usa o da dificuldde
-		Vector2I mapSize = 
-		(customDifficultySize > Vector2I.Zero)
-			? customDifficultySize
-			: Singleton.MapSizes.DifficultyToMapSize(difficulty);
-			
-		CreateTileMap(mapSize);
-	}
+    public override void _Ready()
+    {
+		Vector2I mapSize = Singleton.MapSizes.DifficultyToMapSize(Singleton.difficulty);
+     	CreateTileMap(mapSize);
+    }
 }

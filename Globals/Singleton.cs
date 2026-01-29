@@ -11,11 +11,12 @@ public partial class Singleton : Node
 		hard, // valor: 2
 		custom, // valor: 3
 	}
-
+	public static Difficulty difficulty;
 	public class MapSizes
 	{
 		public static readonly Vector2I easy = new(10, 8);
 		public static readonly Vector2I medium = new(16, 12);
+		public static readonly Vector2I hard = new(24, 20);
 		
 		
 		
@@ -31,7 +32,7 @@ public partial class Singleton : Node
 	{
 		{Difficulty.easy , MapSizes.easy},
 		{Difficulty.medium , MapSizes.medium},
+		{Difficulty.hard , MapSizes.hard},
 	};
-	
 	}
 }

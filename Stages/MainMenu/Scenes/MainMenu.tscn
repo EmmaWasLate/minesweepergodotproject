@@ -176,3 +176,4 @@ text = "Custom"
 [connection signal="button_down" from="Menu/BaseMenu/Center/VBoxContainer/NewGame/Button" to="Menu" method="_ButtonDown_NewGame"]
 [connection signal="button_down" from="Menu/DifficultyMenu/Center/HBoxContainer/EasyOption/Button" to="Menu" method="_ButtonDown_SelectDifficulty" binds= [0]]
 [connection signal="button_down" from="Menu/DifficultyMenu/Center/HBoxContainer/MediumOption/Button" to="Menu" method="_ButtonDown_SelectDifficulty" binds= [1]]
+[connection signal="button_down" from="Menu/DifficultyMenu/Center/HBoxContainer/HardOption/Button" to="Menu" method="_ButtonDown_SelectDifficulty" binds= [2]]
