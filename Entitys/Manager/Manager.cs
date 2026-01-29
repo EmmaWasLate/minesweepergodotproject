@@ -24,8 +24,8 @@ public partial class Manager : Node2D
 	public void PositionTileMap(Vector2I mapSize)
 	{
 		//Cria a variavel de Scaling de x e y
-		float xScaling = ((float)DisplayServer.WindowGetSize().X - 100) / (mapSize.X * 16);
-		float yScaling = ((float)DisplayServer.WindowGetSize().Y - 100) / (mapSize.Y * 16);
+		float xScaling = ((float)DisplayServer.WindowGetSize().X - 0) / (mapSize.X * 16);
+		float yScaling = ((float)DisplayServer.WindowGetSize().Y - 0) / (mapSize.Y * 16);
 		float scaling = 0;
 		//Verifica qual Scaling eh menor e aplica no tilemap
 		if (xScaling < yScaling)
@@ -44,18 +44,12 @@ public partial class Manager : Node2D
 
 		if (mapSize.X % 2 != 0)
 		{
-			xPosition = (float)DisplayServer.WindowGetSize().X/2 - (float)(.5 * scaling * 16);
-		} else
-		{
-			xPosition = (float)DisplayServer.WindowGetSize().X/2;
+			xPosition -= 0.5f * scaling * 16;
 		}
 
 		if (mapSize.Y % 2 != 0)
 		{
-			yPosition = (float)DisplayServer.WindowGetSize().Y/2 - (float)(.5 * scaling * 16);
-		} else
-		{
-			yPosition = (float)DisplayServer.WindowGetSize().Y/2;
+			yPosition -= 0.5f * scaling * 16;
 		}
 
 		tilemaplayer.Position = new (xPosition, yPosition);

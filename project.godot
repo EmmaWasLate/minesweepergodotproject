@@ -29,6 +29,10 @@ window/stretch/aspect="expand"
 
 project/assembly_name="minesweeper"
 
+[physics]
+
+2d/default_gravity=17.265000000000327
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
