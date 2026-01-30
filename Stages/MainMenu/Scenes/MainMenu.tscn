@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://b1hyy5g4usr87"]
+[gd_scene load_steps=4 format=3 uid="uid://b1hyy5g4usr87"]
 
 [ext_resource type="Texture2D" uid="uid://mcoebx6hes4w" path="res://Common/GameTilesets/tileset.png" id="1_bjh4i"]
 [ext_resource type="Script" uid="uid://65yrc48vepk1" path="res://Entitys/UI/MainMenu.cs" id="1_upgdd"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_upgdd"]
+font_size = 36
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -28,6 +31,7 @@ hardOption = NodePath("DifficultyMenu/Center/HBoxContainer/HardOption/Button")
 customOption = NodePath("DifficultyMenu/Center/HBoxContainer/CustomOption/Button")
 
 [node name="BaseMenu" type="MarginContainer" parent="Menu"]
+visible = false
 layout_mode = 2
 
 [node name="Center" type="MarginContainer" parent="Menu/BaseMenu"]
@@ -172,6 +176,110 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Custom"
+
+[node name="CustomDifficultyMenu" type="MarginContainer" parent="Menu"]
+layout_mode = 2
+
+[node name="Center" type="MarginContainer" parent="Menu/CustomDifficultyMenu"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="Menu/CustomDifficultyMenu/Center"]
+custom_minimum_size = Vector2(9, 0)
+layout_mode = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Menu/CustomDifficultyMenu/Center/MarginContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(400, 227.86)
+layout_mode = 2
+texture = ExtResource("1_bjh4i")
+region_rect = Rect2(0, 0, 16, 16)
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -74.0
+offset_right = 74.0
+offset_bottom = 66.0
+grow_horizontal = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Set your map size"
+label_settings = SubResource("LabelSettings_upgdd")
+horizontal_alignment = 1
+vertical_alignment = 1
+text_direction = 1
+language = "en_US"
+
+[node name="CenterContainer" type="MarginContainer" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MainHBox" type="HBoxContainer" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label2" type="Label" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Rows"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="RowsBox" type="SpinBox" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Colums"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ColumsBox" type="SpinBox" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox"]
+layout_mode = 2
+
+[node name="SizeBoxes" type="VBoxContainer" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox"]
+layout_mode = 2
+
+[node name="ButtonVBox" type="VBoxContainer" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 4
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/ButtonVBox"]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+texture = ExtResource("1_bjh4i")
+region_rect = Rect2(0, 0, 16, 16)
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+
+[node name="Button" type="Button" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/ButtonVBox/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Play"
 
 [connection signal="button_down" from="Menu/BaseMenu/Center/VBoxContainer/NewGame/Button" to="Menu" method="_ButtonDown_NewGame"]
 [connection signal="button_down" from="Menu/DifficultyMenu/Center/HBoxContainer/EasyOption/Button" to="Menu" method="_ButtonDown_SelectDifficulty" binds= [0]]

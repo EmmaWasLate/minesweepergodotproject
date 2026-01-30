@@ -23,6 +23,6 @@ public partial class MainMenu : MarginContainer
 
 	public void _ButtonDown_SelectDifficulty(int difficulty)
 	{
-		GetNode<SceneManager>("/root/SceneManager").StartMainLevel((Singleton.Difficulty)difficulty);
+		GetNode<SceneManager>("/root/SceneManager").StartMainLevel((Singleton.Difficulty)difficulty , new());
 	}
 }
