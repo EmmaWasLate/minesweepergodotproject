@@ -14,7 +14,7 @@ public partial class Singleton : Node
 	public static Difficulty difficulty;
 	public class MapSizes
 	{
-		public static readonly Vector2I easy = new(11, 9);
+		public static readonly Vector2I easy = new(10, 8);
 		public static readonly Vector2I medium = new(16, 12);
 		public static readonly Vector2I hard = new(24, 20);
 		

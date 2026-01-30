@@ -1,10 +1,11 @@
+using System.Security.Cryptography.X509Certificates;
 using Godot;
 
 public partial class Manager : Node2D
 {
 	[Export] public TileMapLayer tilemaplayer;
-
-	public void CreateTileMap(Vector2I mapSize)
+	Vector2I mapSize;
+	public void CreateTileMap()
 	{
 		int xOffset = (mapSize.X/2);
 		int yOffset = (mapSize.Y/2);
@@ -18,10 +19,10 @@ public partial class Manager : Node2D
 
 		tilemaplayer.SetCell(new(0, 0), 0, new(0, 0));
 
-		PositionTileMap(mapSize);
+		PositionTileMap();
 	}
 
-	public void PositionTileMap(Vector2I mapSize)
+	public float GetScaling()
 	{
 		//Cria a variavel de Scaling de x e y
 		float xScaling = ((float)DisplayServer.WindowGetSize().X - 0) / (mapSize.X * 16);
@@ -35,6 +36,13 @@ public partial class Manager : Node2D
 		{
 			scaling = yScaling;
 		}
+
+		return scaling;
+	}
+
+	public void PositionTileMap()
+	{
+		float scaling = GetScaling();
 
 		tilemaplayer.Scale = new(scaling, scaling);
 
@@ -58,7 +66,32 @@ public partial class Manager : Node2D
 
     public override void _Ready()
     {
-		Vector2I mapSize = Singleton.MapSizes.DifficultyToMapSize(Singleton.difficulty);
-     	CreateTileMap(mapSize);
+		mapSize = Singleton.MapSizes.DifficultyToMapSize(Singleton.difficulty);
+     	CreateTileMap();
+    }
+	public override void _Process(double delta)
+    {
+		float scaling = GetScaling();
+        if (Input.IsActionJustPressed("left_mouse"))
+		{
+			Vector2 offset = new(0, 0);
+			if (mapSize.X % 2 != 0)
+			{
+				offset.X = .5f;
+			}
+
+			if (mapSize.Y % 2 != 0)
+			{
+				offset.Y = .5f;
+			}
+			
+			Vector2I tileCoords = tilemaplayer.LocalToMap(offset * 16 + GetGlobalMousePosition() / scaling);
+
+			if (tilemaplayer.GetCellAtlasCoords(tileCoords).Equals(new(0, 0)))
+			{
+				tilemaplayer.SetCell(tileCoords, 0, new(2, 0));
+			}
+			
+		}
     }
 }
