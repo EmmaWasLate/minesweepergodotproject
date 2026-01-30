@@ -1,10 +1,16 @@
+using System;
 using System.Security.Cryptography.X509Certificates;
 using Godot;
 
 public partial class Manager : Node2D
 {
+	Random random = new();
 	[Export] public TileMapLayer tilemaplayer;
+	[Export] public TileMapLayer flags;
 	Vector2I mapSize;
+	int bombAmount;
+
+	bool[,] bombs = new bool[0, 0];
 	public void CreateTileMap()
 	{
 		int xOffset = (mapSize.X/2);
@@ -16,8 +22,6 @@ public partial class Manager : Node2D
 				tilemaplayer.SetCell(new(i - xOffset, j - yOffset), 0, new(0, 0));
 			}
 		}
-
-		tilemaplayer.SetCell(new(0, 0), 0, new(0, 0));
 
 		PositionTileMap();
 	}
@@ -45,6 +49,7 @@ public partial class Manager : Node2D
 		float scaling = GetScaling();
 
 		tilemaplayer.Scale = new(scaling, scaling);
+		flags.Scale = new(scaling, scaling);
 
 		//Posiciona o tilemap no centro da tela
 		float xPosition = 0;
@@ -61,13 +66,32 @@ public partial class Manager : Node2D
 		}
 
 		tilemaplayer.Position = new (xPosition, yPosition);
-		
+		flags.Position = new (xPosition, yPosition);
+	}
+
+	public void PositionBombs()
+	{
+		int i = 0;
+		while (i < bombAmount)
+		{
+			int x = random.Next(mapSize.X + 1);
+			int y = random.Next(mapSize.Y + 1);
+
+			if (bombs[x, y])
+			{
+				bombs[x, y] = true;
+				i++;
+			}
+		}
 	}
 
     public override void _Ready()
     {
-		mapSize = Singleton.MapSizes.DifficultyToMapSize(Singleton.difficulty);
+		mapSize = Singleton.DifficultyInfo.DifficultyToMapSize(Singleton.difficulty);
+		bombAmount = Singleton.DifficultyInfo.DifficultyToBombAmount(Singleton.difficulty);
+		bombs = new bool[mapSize.X, mapSize.Y];
      	CreateTileMap();
+		PositionBombs();
     }
 	public override void _Process(double delta)
     {
@@ -84,7 +108,7 @@ public partial class Manager : Node2D
 			{
 				offset.Y = .5f;
 			}
-			
+
 			Vector2I tileCoords = tilemaplayer.LocalToMap(offset * 16 + GetGlobalMousePosition() / scaling);
 
 			if (tilemaplayer.GetCellAtlasCoords(tileCoords).Equals(new(0, 0)))
@@ -92,6 +116,27 @@ public partial class Manager : Node2D
 				tilemaplayer.SetCell(tileCoords, 0, new(2, 0));
 			}
 			
+		}
+
+		if (Input.IsActionJustPressed("right_mouse"))
+		{
+			Vector2 offset = new(0, 0);
+			if (mapSize.X % 2 != 0)
+			{
+				offset.X = .5f;
+			}
+
+			if (mapSize.Y % 2 != 0)
+			{
+				offset.Y = .5f;
+			}
+
+			Vector2I tileCoords = flags.LocalToMap(offset * 16 + GetGlobalMousePosition() / scaling);
+
+			if (tilemaplayer.GetCellAtlasCoords(tileCoords).Equals(new(0, 0)))
+			{
+				flags.SetCell(tileCoords, 0, new(1, 0));
+			}
 		}
     }
 }

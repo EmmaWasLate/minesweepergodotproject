@@ -1,9 +1,20 @@
 using Godot;
-using Godot.Collections;
-using System;
+using System.Collections.Generic;
 
 public partial class Singleton : Node
 {
+	public struct DifficultyStruct
+	{
+		public readonly Vector2I size = new();
+		public readonly int bombAmount;
+
+		public DifficultyStruct(Vector2I size, int bombAmount)
+		{
+			this.size = size;
+			this.bombAmount = bombAmount;
+		}
+	}
+
 	// enums são integers chiques.
 	public enum Difficulty{
 		easy, // valor: 0
@@ -12,27 +23,30 @@ public partial class Singleton : Node
 		custom, // valor: 3
 	}
 	public static Difficulty difficulty;
-	public class MapSizes
+	public class DifficultyInfo
 	{
-		public static readonly Vector2I easy = new(10, 8);
-		public static readonly Vector2I medium = new(16, 12);
-		public static readonly Vector2I hard = new(24, 20);
-		
+		public static readonly DifficultyStruct easy = new(new Vector2I(10, 8), 10);
+		public static readonly DifficultyStruct medium = new(new Vector2I(16, 12), 40);
+		public static readonly DifficultyStruct hard = new(new Vector2I(24, 20), 99);
 		
 		
 		// retorna o tamanho de um mapa de acordo com a dificuldade passada.
 		// faz o mesmo que dictionary<Tkey,TValue>[key], porem mais legivel.
 		public static Vector2I DifficultyToMapSize(Difficulty difficulty)
 		{
-			return gameDifficulty[difficulty];
+			return gameDifficulty[difficulty].size;
 		}
 
+		public static int DifficultyToBombAmount(Difficulty difficulty)
+		{
+			return gameDifficulty[difficulty].bombAmount;
+		}
 	// organiza as dificuldades de acordo com seus enums.
-	public static Dictionary<Difficulty, Vector2I> gameDifficulty = new Dictionary<Difficulty, Vector2I>
+	public static Dictionary<Difficulty, DifficultyStruct> gameDifficulty = new Dictionary<Difficulty, DifficultyStruct>
 	{
-		{Difficulty.easy , MapSizes.easy},
-		{Difficulty.medium , MapSizes.medium},
-		{Difficulty.hard , MapSizes.hard},
+		{Difficulty.easy , DifficultyInfo.easy},
+		{Difficulty.medium , DifficultyInfo.medium},
+		{Difficulty.hard , DifficultyInfo.hard},
 	};
 	}
 }

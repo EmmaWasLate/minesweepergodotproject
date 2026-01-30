@@ -21,6 +21,11 @@ enabled = false
 texture_filter = 1
 tile_set = SubResource("TileSet_6mfv6")
 
-[node name="manager" type="Node2D" parent="." node_paths=PackedStringArray("tilemaplayer")]
+[node name="flags" type="TileMapLayer" parent="."]
+texture_filter = 1
+tile_set = SubResource("TileSet_6mfv6")
+
+[node name="manager" type="Node2D" parent="." node_paths=PackedStringArray("tilemaplayer", "flags")]
 script = ExtResource("2_epypp")
 tilemaplayer = NodePath("../TileMapLayer")
+flags = NodePath("../flags")
