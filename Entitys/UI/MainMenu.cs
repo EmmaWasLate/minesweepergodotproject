@@ -6,14 +6,16 @@ public partial class MainMenu : MarginContainer
 
 	[ExportGroup("BaseMenu")]
 	[Export] public MarginContainer baseMenuContainer;	
-	[Export] public Button newGameButton;
 
 	[ExportGroup("DifficultyMenu")]
 	[Export] public MarginContainer difficultyMenuContainer;
-	[Export] public Button easyOption;
-	[Export] public Button mediumOption;
-	[Export] public Button hardOption;
-	[Export] public Button customOption;
+	
+	[ExportGroup("CustomDifficultyMenu")]
+	[Export] public MarginContainer customDifficultyMenuContainer;
+
+	string rowsBoxPath = "%RowsBox";
+	string ColumnsBoxPath = "%ColumsBox";
+	string BombsBoxPath = "%BombsBox";
 
 	public void _ButtonDown_NewGame()
 	{
@@ -23,6 +25,19 @@ public partial class MainMenu : MarginContainer
 
 	public void _ButtonDown_SelectDifficulty(int difficulty)
 	{
-		GetNode<SceneManager>("/root/SceneManager").StartMainLevel((Singleton.Difficulty)difficulty , new());
+		GetNode<SceneManager>("/root/SceneManager").StartMainLevel((Singleton.Difficulty)difficulty);
+	}
+
+	public void _ButtonDown_CustomDifficulty()
+	{
+		SpinBox rowsBox = GetNode<SpinBox>(rowsBoxPath);
+		SpinBox columsBox = GetNode<SpinBox>(ColumnsBoxPath);
+		SpinBox bombsBox = GetNode<SpinBox>(BombsBoxPath);
+
+		Vector2I mapSize = new((int)rowsBox.Value,(int)columsBox.Value);
+
+		Singleton.DifficultyInfo.custom = new(mapSize,(int)bombsBox.Value);
+		
+		GetNode<SceneManager>("/root/SceneManager").StartMainLevel(Singleton.Difficulty.custom);
 	}
 }

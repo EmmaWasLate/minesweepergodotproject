@@ -14,7 +14,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Menu" type="MarginContainer" parent="." node_paths=PackedStringArray("baseMenuContainer", "newGameButton", "difficultyMenuContainer", "easyOption", "mediumOption", "hardOption", "customOption")]
+[node name="Menu" type="MarginContainer" parent="." node_paths=PackedStringArray("baseMenuContainer", "difficultyMenuContainer")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,14 +23,10 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_upgdd")
 baseMenuContainer = NodePath("BaseMenu")
-newGameButton = NodePath("BaseMenu/Center/VBoxContainer/NewGame/Button")
 difficultyMenuContainer = NodePath("DifficultyMenu")
-easyOption = NodePath("DifficultyMenu/Center/HBoxContainer/EasyOption/Button")
-mediumOption = NodePath("DifficultyMenu/Center/HBoxContainer/MediumOption/Button")
-hardOption = NodePath("DifficultyMenu/Center/HBoxContainer/HardOption/Button")
-customOption = NodePath("DifficultyMenu/Center/HBoxContainer/CustomOption/Button")
 
 [node name="BaseMenu" type="MarginContainer" parent="Menu"]
+visible = false
 layout_mode = 2
 
 [node name="Center" type="MarginContainer" parent="Menu/BaseMenu"]
@@ -177,7 +173,6 @@ grow_vertical = 2
 text = "Custom"
 
 [node name="CustomDifficultyMenu" type="MarginContainer" parent="Menu"]
-visible = false
 layout_mode = 2
 
 [node name="Center" type="MarginContainer" parent="Menu/CustomDifficultyMenu"]
@@ -241,7 +236,12 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="RowsBox" type="SpinBox" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox"]
+unique_name_in_owner = true
 layout_mode = 2
+min_value = 2.0
+max_value = 2147483647.0
+value = 10.0
+allow_greater = true
 
 [node name="Label" type="Label" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox"]
 layout_mode = 2
@@ -251,7 +251,11 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="ColumsBox" type="SpinBox" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox"]
+unique_name_in_owner = true
 layout_mode = 2
+min_value = 2.0
+max_value = 2147483647.0
+value = 8.0
 
 [node name="SizeBoxes" type="VBoxContainer" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox"]
 layout_mode = 2
@@ -269,7 +273,12 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="BombsBox" type="SpinBox" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox2"]
+unique_name_in_owner = true
 layout_mode = 2
+min_value = 1.0
+max_value = 2147483647.0
+value = 2.0
+rounded = true
 
 [node name="SizeBoxes" type="VBoxContainer" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox2"]
 layout_mode = 2
@@ -303,3 +312,4 @@ text = "Play"
 [connection signal="button_down" from="Menu/DifficultyMenu/Center/HBoxContainer/EasyOption/Button" to="Menu" method="_ButtonDown_SelectDifficulty" binds= [0]]
 [connection signal="button_down" from="Menu/DifficultyMenu/Center/HBoxContainer/MediumOption/Button" to="Menu" method="_ButtonDown_SelectDifficulty" binds= [1]]
 [connection signal="button_down" from="Menu/DifficultyMenu/Center/HBoxContainer/HardOption/Button" to="Menu" method="_ButtonDown_SelectDifficulty" binds= [2]]
+[connection signal="button_down" from="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/ButtonVBox/NinePatchRect/Button" to="Menu" method="_ButtonDown_CustomDifficulty"]
