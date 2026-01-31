@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dhlnyrb02fbgr"]
+[gd_scene load_steps=5 format=3 uid="uid://kttghbn3dhac"]
 
 [ext_resource type="Texture2D" uid="uid://mcoebx6hes4w" path="res://Common/GameTilesets/tileset.png" id="1_0e48y"]
 [ext_resource type="Script" uid="uid://dawh0ekn0kbs1" path="res://Entitys/Manager/Manager.cs" id="2_epypp"]
@@ -15,7 +15,6 @@ sources/0 = SubResource("TileSetAtlasSource_61od6")
 [node name="Node2D" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-enabled = false
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 texture_filter = 1

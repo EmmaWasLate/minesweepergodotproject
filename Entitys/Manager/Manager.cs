@@ -74,10 +74,10 @@ public partial class Manager : Node2D
 		int i = 0;
 		while (i < bombAmount)
 		{
-			int x = random.Next(mapSize.X + 1);
-			int y = random.Next(mapSize.Y + 1);
+			int x = random.Next(mapSize.X);
+			int y = random.Next(mapSize.Y);
 
-			if (bombs[x, y])
+			if (!bombs[x, y])
 			{
 				bombs[x, y] = true;
 				i++;
@@ -111,7 +111,7 @@ public partial class Manager : Node2D
 
 			Vector2I tileCoords = tilemaplayer.LocalToMap(offset * 16 + GetGlobalMousePosition() / scaling);
 
-			if (tilemaplayer.GetCellAtlasCoords(tileCoords).Equals(new(0, 0)))
+			if (tilemaplayer.GetCellAtlasCoords(tileCoords).Equals(new(0, 0)) && !flags.GetCellAtlasCoords(tileCoords).Equals(new(1, 0)))
 			{
 				tilemaplayer.SetCell(tileCoords, 0, new(2, 0));
 			}
@@ -135,7 +135,14 @@ public partial class Manager : Node2D
 
 			if (tilemaplayer.GetCellAtlasCoords(tileCoords).Equals(new(0, 0)))
 			{
-				flags.SetCell(tileCoords, 0, new(1, 0));
+				if (flags.GetCellAtlasCoords(tileCoords).Equals(new(1, 0)))
+				{
+					flags.SetCell(tileCoords, 0, new(-1, -1));
+				} else
+				{
+					flags.SetCell(tileCoords, 0, new(1, 0));
+				}
+				
 			}
 		}
     }
