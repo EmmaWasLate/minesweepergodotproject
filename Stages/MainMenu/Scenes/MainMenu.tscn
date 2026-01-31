@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b1hyy5g4usr87"]
 
-[ext_resource type="Texture2D" uid="uid://mcoebx6hes4w" path="res://Common/GameTilesets/tileset.png" id="1_bjh4i"]
 [ext_resource type="Script" uid="uid://65yrc48vepk1" path="res://Entitys/UI/MainMenu.cs" id="1_upgdd"]
+[ext_resource type="Texture2D" uid="uid://crlpfh48ti1se" path="res://Common/GameTilesets/GroundTile.png" id="2_upgdd"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_upgdd"]
 font_size = 36
@@ -31,6 +31,7 @@ hardOption = NodePath("DifficultyMenu/Center/HBoxContainer/HardOption/Button")
 customOption = NodePath("DifficultyMenu/Center/HBoxContainer/CustomOption/Button")
 
 [node name="BaseMenu" type="MarginContainer" parent="Menu"]
+visible = false
 layout_mode = 2
 
 [node name="Center" type="MarginContainer" parent="Menu/BaseMenu"]
@@ -45,7 +46,7 @@ layout_mode = 2
 texture_filter = 1
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-texture = ExtResource("1_bjh4i")
+texture = ExtResource("2_upgdd")
 region_rect = Rect2(0, 0, 16, 16)
 patch_margin_left = 1
 patch_margin_top = 1
@@ -65,7 +66,7 @@ text = "New Game"
 texture_filter = 1
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-texture = ExtResource("1_bjh4i")
+texture = ExtResource("2_upgdd")
 region_rect = Rect2(0, 0, 16, 16)
 patch_margin_left = 1
 patch_margin_top = 1
@@ -82,10 +83,10 @@ grow_vertical = 2
 text = "Customize Theme"
 
 [node name="DifficultyMenu" type="MarginContainer" parent="Menu"]
-visible = false
 layout_mode = 2
 
 [node name="Center" type="MarginContainer" parent="Menu/DifficultyMenu"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -97,7 +98,7 @@ layout_mode = 2
 texture_filter = 1
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-texture = ExtResource("1_bjh4i")
+texture = ExtResource("2_upgdd")
 region_rect = Rect2(0, 0, 16, 16)
 patch_margin_left = 1
 patch_margin_top = 1
@@ -118,7 +119,7 @@ text = "Easy
 texture_filter = 1
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-texture = ExtResource("1_bjh4i")
+texture = ExtResource("2_upgdd")
 region_rect = Rect2(0, 0, 16, 16)
 patch_margin_left = 1
 patch_margin_top = 1
@@ -139,7 +140,7 @@ text = "Medium
 texture_filter = 1
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-texture = ExtResource("1_bjh4i")
+texture = ExtResource("2_upgdd")
 region_rect = Rect2(0, 0, 16, 16)
 patch_margin_left = 1
 patch_margin_top = 1
@@ -160,7 +161,7 @@ text = "Hard
 texture_filter = 1
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-texture = ExtResource("1_bjh4i")
+texture = ExtResource("2_upgdd")
 region_rect = Rect2(0, 0, 16, 16)
 patch_margin_left = 1
 patch_margin_top = 1
@@ -177,7 +178,6 @@ grow_vertical = 2
 text = "Custom"
 
 [node name="CustomDifficultyMenu" type="MarginContainer" parent="Menu"]
-visible = false
 layout_mode = 2
 
 [node name="Center" type="MarginContainer" parent="Menu/CustomDifficultyMenu"]
@@ -193,7 +193,7 @@ layout_mode = 2
 texture_filter = 1
 custom_minimum_size = Vector2(400, 227.86)
 layout_mode = 2
-texture = ExtResource("1_bjh4i")
+texture = ExtResource("2_upgdd")
 region_rect = Rect2(0, 0, 16, 16)
 patch_margin_left = 1
 patch_margin_top = 1
@@ -256,6 +256,24 @@ layout_mode = 2
 [node name="SizeBoxes" type="VBoxContainer" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox"]
 layout_mode = 2
 
+[node name="MainHBox2" type="HBoxContainer" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Bombs" type="Label" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox2"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Bombs"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="BombsBox" type="SpinBox" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox2"]
+layout_mode = 2
+
+[node name="SizeBoxes" type="VBoxContainer" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox2"]
+layout_mode = 2
+
 [node name="ButtonVBox" type="VBoxContainer" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 8
@@ -265,7 +283,7 @@ theme_override_constants/separation = 4
 texture_filter = 1
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-texture = ExtResource("1_bjh4i")
+texture = ExtResource("2_upgdd")
 region_rect = Rect2(0, 0, 16, 16)
 patch_margin_left = 1
 patch_margin_top = 1
