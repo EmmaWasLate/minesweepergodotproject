@@ -1,16 +1,17 @@
 using System;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.Json.Serialization;
 using Godot;
 
 public partial class Manager : Node2D
 {
 	Random random = new();
-	[Export] public TileMapLayer tilemaplayer;
+	[Export] public TileMapLayer ground;
 	[Export] public TileMapLayer flags;
 	Vector2I mapSize;
 	int bombAmount;
 
-	bool[,] bombs = new bool[0, 0];
+	int[,] tileInfo = new int[0, 0];
 	public void CreateTileMap()
 	{
 		int xOffset = (mapSize.X/2);
@@ -19,7 +20,7 @@ public partial class Manager : Node2D
 		{
 			for (int j = 0; j < mapSize.Y; j++)
 			{
-				tilemaplayer.SetCell(new(i - xOffset, j - yOffset), 0, new(0, 0));
+				ground.SetCell(new(i - xOffset, j - yOffset), 0, new(0, 0));
 			}
 		}
 
@@ -48,7 +49,7 @@ public partial class Manager : Node2D
 	{
 		float scaling = GetScaling();
 
-		tilemaplayer.Scale = new(scaling, scaling);
+		ground.Scale = new(scaling, scaling);
 		flags.Scale = new(scaling, scaling);
 
 		//Posiciona o tilemap no centro da tela
@@ -65,22 +66,48 @@ public partial class Manager : Node2D
 			yPosition -= 0.5f * scaling * 16;
 		}
 
-		tilemaplayer.Position = new (xPosition, yPosition);
+		ground.Position = new (xPosition, yPosition);
 		flags.Position = new (xPosition, yPosition);
 	}
 
-	public void PositionBombs()
+	public void CreateTileInfo()
 	{
-		int i = 0;
-		while (i < bombAmount)
+		int counter = 0;
+		while (counter < bombAmount)
 		{
 			int x = random.Next(mapSize.X);
 			int y = random.Next(mapSize.Y);
 
-			if (!bombs[x, y])
+			if (tileInfo[x, y] != -1)
 			{
-				bombs[x, y] = true;
-				i++;
+				tileInfo[x, y] = -1;
+				counter++;
+			}
+		}
+
+		for (int i = 0; i < mapSize.X; i++)
+		{
+			for (int j = 0; j < mapSize.Y; j++)
+			{
+				counter = 0;
+				if (tileInfo[i, j] != -1)
+				{
+					for (int h = -1; h < 2; h++)
+					{
+						for (int l = -1; l < 2; l++)
+						{
+							if (i + h >=0 && i + h < mapSize.X && j + l < mapSize.Y && j + l >= 0)
+							{
+								if (tileInfo [i + h, j + l] == -1)
+								{
+									counter++;
+								}
+							}
+							
+						}
+					}
+					tileInfo[i, j] = counter;
+				}
 			}
 		}
 	}
@@ -89,15 +116,17 @@ public partial class Manager : Node2D
     {
 		mapSize = Singleton.DifficultyInfo.DifficultyToMapSize(Singleton.difficulty);
 		bombAmount = Singleton.DifficultyInfo.DifficultyToBombAmount(Singleton.difficulty);
-		bombs = new bool[mapSize.X, mapSize.Y];
+		tileInfo = new int[mapSize.X, mapSize.Y];
      	CreateTileMap();
-		PositionBombs();
+		CreateTileInfo();
     }
 	public override void _Process(double delta)
     {
 		float scaling = GetScaling();
         if (Input.IsActionJustPressed("left_mouse"))
 		{
+			int xOffset = (mapSize.X/2);
+			int yOffset = (mapSize.Y/2);
 			Vector2 offset = new(0, 0);
 			if (mapSize.X % 2 != 0)
 			{
@@ -109,13 +138,19 @@ public partial class Manager : Node2D
 				offset.Y = .5f;
 			}
 
-			Vector2I tileCoords = tilemaplayer.LocalToMap(offset * 16 + GetGlobalMousePosition() / scaling);
+			Vector2I tileCoords = ground.LocalToMap(offset * 16 + GetGlobalMousePosition() / scaling);
 
-			if (tilemaplayer.GetCellAtlasCoords(tileCoords).Equals(new(0, 0)) && !flags.GetCellAtlasCoords(tileCoords).Equals(new(1, 0)))
+			if (ground.GetCellAtlasCoords(tileCoords).Equals(new(0, 0)) && !flags.GetCellAtlasCoords(tileCoords).Equals(new(0, 0)))
 			{
-				tilemaplayer.SetCell(tileCoords, 0, new(2, 0));
+				ground.SetCell(tileCoords, 0, new(1, 0));
+				if (tileInfo[tileCoords.X + xOffset, tileCoords.Y + yOffset] == -1)
+				{
+					flags.SetCell(tileCoords, 0, new(9, 0));
+				} else if (tileInfo[tileCoords.X + xOffset, tileCoords.Y + yOffset] != 0)
+				{
+					flags.SetCell(tileCoords, 0, new(tileInfo[tileCoords.X + xOffset, tileCoords.Y + yOffset], 0));
+				}
 			}
-			
 		}
 
 		if (Input.IsActionJustPressed("right_mouse"))
@@ -133,14 +168,14 @@ public partial class Manager : Node2D
 
 			Vector2I tileCoords = flags.LocalToMap(offset * 16 + GetGlobalMousePosition() / scaling);
 
-			if (tilemaplayer.GetCellAtlasCoords(tileCoords).Equals(new(0, 0)))
+			if (ground.GetCellAtlasCoords(tileCoords).Equals(new(0, 0)))
 			{
-				if (flags.GetCellAtlasCoords(tileCoords).Equals(new(1, 0)))
+				if (flags.GetCellAtlasCoords(tileCoords).Equals(new(0, 0)))
 				{
 					flags.SetCell(tileCoords, 0, new(-1, -1));
 				} else
 				{
-					flags.SetCell(tileCoords, 0, new(1, 0));
+					flags.SetCell(tileCoords, 0, new(0, 0));
 				}
 				
 			}

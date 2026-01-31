@@ -31,7 +31,6 @@ hardOption = NodePath("DifficultyMenu/Center/HBoxContainer/HardOption/Button")
 customOption = NodePath("DifficultyMenu/Center/HBoxContainer/CustomOption/Button")
 
 [node name="BaseMenu" type="MarginContainer" parent="Menu"]
-visible = false
 layout_mode = 2
 
 [node name="Center" type="MarginContainer" parent="Menu/BaseMenu"]
@@ -178,6 +177,7 @@ grow_vertical = 2
 text = "Custom"
 
 [node name="CustomDifficultyMenu" type="MarginContainer" parent="Menu"]
+visible = false
 layout_mode = 2
 
 [node name="Center" type="MarginContainer" parent="Menu/CustomDifficultyMenu"]
