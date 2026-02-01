@@ -1,11 +1,13 @@
 using System;
-using System.Security.Cryptography.X509Certificates;
-using System.Text.Json.Serialization;
 using Godot;
 
 public partial class Manager : Node2D
 {
 	Random random = new();
+	bool startClick = true;
+	int xOffset;
+	int yOffset;
+	Vector2 offset = new(0, 0);
 	[Export] public TileMapLayer ground;
 	[Export] public TileMapLayer flags;
 	Vector2I mapSize;
@@ -14,8 +16,6 @@ public partial class Manager : Node2D
 	int[,] tileInfo = new int[0, 0];
 	public void CreateTileMap()
 	{
-		int xOffset = (mapSize.X/2);
-		int yOffset = (mapSize.Y/2);
 		for (int i = 0; i < mapSize.X; i++)
 		{
 			for (int j = 0; j < mapSize.Y; j++)
@@ -45,6 +45,31 @@ public partial class Manager : Node2D
 		return scaling;
 	}
 
+	public void RevealNode(Vector2I tileCoords)
+	{
+		if (ground.GetCellAtlasCoords(tileCoords).Equals(new(0, 0)) && !flags.GetCellAtlasCoords(tileCoords).Equals(new(0, 0)))
+			{
+				ground.SetCell(tileCoords, 0, new(1, 0));
+				if (tileInfo[tileCoords.X + xOffset, tileCoords.Y + yOffset] == -1)
+				{
+					flags.SetCell(tileCoords, 0, new(9, 0));
+				} else if (tileInfo[tileCoords.X + xOffset, tileCoords.Y + yOffset] != 0)
+				{
+					flags.SetCell(tileCoords, 0, new(tileInfo[tileCoords.X + xOffset, tileCoords.Y + yOffset], 0));
+				} else
+				{
+					for (int i = -1; i < 2; i++)
+					{
+						for (int j = -1; j < 2; j++)
+						{
+							Vector2I ij = new(i, j);
+							RevealNode(tileCoords + ij);
+						}
+					}
+				}
+			}
+	}
+
 	public void PositionTileMap()
 	{
 		float scaling = GetScaling();
@@ -66,11 +91,26 @@ public partial class Manager : Node2D
 			yPosition -= 0.5f * scaling * 16;
 		}
 
-		ground.Position = new (xPosition, yPosition);
-		flags.Position = new (xPosition, yPosition);
+		ground.Position = new(xPosition, yPosition);
+		flags.Position = new(xPosition, yPosition);
 	}
 
-	public void CreateTileInfo()
+	public bool checkForAdjacentBomb (Vector2I bombCoords, Vector2I startCoords)
+	{
+		for (int h = -1; h < 2; h++)
+			{
+				for (int l = -1; l < 2; l++)
+				{
+					if (startCoords.X + h == bombCoords.X && startCoords.Y + l == bombCoords.Y)
+					{
+						return true;
+					}
+				}
+			}
+		return false;
+	}
+
+	public void CreateTileInfo(Vector2I startCoords)
 	{
 		int counter = 0;
 		while (counter < bombAmount)
@@ -78,8 +118,8 @@ public partial class Manager : Node2D
 			int x = random.Next(mapSize.X);
 			int y = random.Next(mapSize.Y);
 
-			if (tileInfo[x, y] != -1)
-			{
+			if (!checkForAdjacentBomb(new(x - mapSize.X/2, y - mapSize.Y/2), startCoords) && tileInfo[x, y] != -1)
+			{			
 				tileInfo[x, y] = -1;
 				counter++;
 			}
@@ -117,55 +157,37 @@ public partial class Manager : Node2D
 		mapSize = Singleton.DifficultyInfo.DifficultyToMapSize(Singleton.difficulty);
 		bombAmount = Singleton.DifficultyInfo.DifficultyToBombAmount(Singleton.difficulty);
 		tileInfo = new int[mapSize.X, mapSize.Y];
+		xOffset = mapSize.X/2;
+		yOffset = mapSize.Y/2;
+		Vector2 offset = new(0, 0);
+		if (mapSize.X % 2 != 0)
+		{
+			offset.X = .5f;
+		}
+
+		if (mapSize.Y % 2 != 0)
+		{
+			offset.Y = .5f;
+		}
      	CreateTileMap();
-		CreateTileInfo();
     }
 	public override void _Process(double delta)
     {
 		float scaling = GetScaling();
         if (Input.IsActionJustPressed("left_mouse"))
 		{
-			int xOffset = (mapSize.X/2);
-			int yOffset = (mapSize.Y/2);
-			Vector2 offset = new(0, 0);
-			if (mapSize.X % 2 != 0)
-			{
-				offset.X = .5f;
-			}
-
-			if (mapSize.Y % 2 != 0)
-			{
-				offset.Y = .5f;
-			}
-
 			Vector2I tileCoords = ground.LocalToMap(offset * 16 + GetGlobalMousePosition() / scaling);
-
-			if (ground.GetCellAtlasCoords(tileCoords).Equals(new(0, 0)) && !flags.GetCellAtlasCoords(tileCoords).Equals(new(0, 0)))
+			if (startClick)
 			{
-				ground.SetCell(tileCoords, 0, new(1, 0));
-				if (tileInfo[tileCoords.X + xOffset, tileCoords.Y + yOffset] == -1)
-				{
-					flags.SetCell(tileCoords, 0, new(9, 0));
-				} else if (tileInfo[tileCoords.X + xOffset, tileCoords.Y + yOffset] != 0)
-				{
-					flags.SetCell(tileCoords, 0, new(tileInfo[tileCoords.X + xOffset, tileCoords.Y + yOffset], 0));
-				}
+				CreateTileInfo(tileCoords);
+				startClick = false;
 			}
+			
+			RevealNode(tileCoords);	
 		}
 
 		if (Input.IsActionJustPressed("right_mouse"))
 		{
-			Vector2 offset = new(0, 0);
-			if (mapSize.X % 2 != 0)
-			{
-				offset.X = .5f;
-			}
-
-			if (mapSize.Y % 2 != 0)
-			{
-				offset.Y = .5f;
-			}
-
 			Vector2I tileCoords = flags.LocalToMap(offset * 16 + GetGlobalMousePosition() / scaling);
 
 			if (ground.GetCellAtlasCoords(tileCoords).Equals(new(0, 0)))
