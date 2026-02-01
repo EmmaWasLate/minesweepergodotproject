@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://kttghbn3dhac"]
+[gd_scene load_steps=8 format=3 uid="uid://dhlnyrb02fbgr"]
 
 [ext_resource type="Texture2D" uid="uid://crlpfh48ti1se" path="res://Common/GameTilesets/GroundTile.png" id="1_yr7f0"]
 [ext_resource type="Script" uid="uid://dawh0ekn0kbs1" path="res://Entitys/Manager/Manager.cs" id="2_epypp"]
