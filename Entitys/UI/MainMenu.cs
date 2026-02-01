@@ -35,9 +35,11 @@ public partial class MainMenu : MarginContainer
 		SpinBox bombsBox = GetNode<SpinBox>(BombsBoxPath);
 
 		Vector2I mapSize = new((int)rowsBox.Value,(int)columsBox.Value);
-
 		Singleton.DifficultyInfo.custom = new(mapSize,(int)bombsBox.Value);
-		
+
+		Singleton.DifficultyInfo.UpdateDictionaryObj();
+
 		GetNode<SceneManager>("/root/SceneManager").StartMainLevel(Singleton.Difficulty.custom);
+		
 	}
 }

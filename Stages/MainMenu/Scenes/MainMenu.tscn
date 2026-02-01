@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://b1hyy5g4usr87"]
+[gd_scene load_steps=5 format=3 uid="uid://b1hyy5g4usr87"]
 
 [ext_resource type="Script" uid="uid://65yrc48vepk1" path="res://Entitys/UI/MainMenu.cs" id="1_upgdd"]
 [ext_resource type="Texture2D" uid="uid://crlpfh48ti1se" path="res://Common/GameTilesets/GroundTile.png" id="2_upgdd"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_upgdd"]
 font_size = 36
+
+[sub_resource type="LabelSettings" id="LabelSettings_jg1lr"]
+font_size = 11
+font_color = Color(1, 0.4166032, 0.34792536, 1)
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -26,7 +30,6 @@ baseMenuContainer = NodePath("BaseMenu")
 difficultyMenuContainer = NodePath("DifficultyMenu")
 
 [node name="BaseMenu" type="MarginContainer" parent="Menu"]
-visible = false
 layout_mode = 2
 
 [node name="Center" type="MarginContainer" parent="Menu/BaseMenu"]
@@ -173,6 +176,7 @@ grow_vertical = 2
 text = "Custom"
 
 [node name="CustomDifficultyMenu" type="MarginContainer" parent="Menu"]
+visible = false
 layout_mode = 2
 
 [node name="Center" type="MarginContainer" parent="Menu/CustomDifficultyMenu"]
@@ -186,7 +190,7 @@ layout_mode = 2
 
 [node name="NinePatchRect" type="NinePatchRect" parent="Menu/CustomDifficultyMenu/Center/MarginContainer"]
 texture_filter = 1
-custom_minimum_size = Vector2(400, 227.86)
+custom_minimum_size = Vector2(550, 257.86)
 layout_mode = 2
 texture = ExtResource("2_upgdd")
 region_rect = Rect2(0, 0, 16, 16)
@@ -221,7 +225,7 @@ layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer"]
 layout_mode = 2
-theme_override_constants/separation = 25
+theme_override_constants/separation = 18
 
 [node name="MainHBox" type="HBoxContainer" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
@@ -285,13 +289,32 @@ layout_mode = 2
 
 [node name="ButtonVBox" type="VBoxContainer" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 8
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_constants/separation = 4
+
+[node name="RowsColumsWarn" type="Label" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/ButtonVBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Rows times columns must be greater then 1"
+label_settings = SubResource("LabelSettings_jg1lr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BombsWarn" type="Label" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/ButtonVBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Bombs must be lesser then rows times colums minus 1"
+label_settings = SubResource("LabelSettings_jg1lr")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="NinePatchRect" type="NinePatchRect" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/ButtonVBox"]
 texture_filter = 1
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture = ExtResource("2_upgdd")
 region_rect = Rect2(0, 0, 16, 16)
 patch_margin_left = 1

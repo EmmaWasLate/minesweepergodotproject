@@ -7,6 +7,7 @@ public partial class SceneManager : Node
 	public void StartMainLevel(Singleton.Difficulty difficulty)
 	{
 		Singleton.difficulty = difficulty;
+		
 		GetTree().ChangeSceneToFile(mainLevelPath);
 	}
 	
