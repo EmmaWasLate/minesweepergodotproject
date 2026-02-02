@@ -64,11 +64,11 @@ public partial class MainMenu : MarginContainer
 		GD.Print(smallSizeWarn.Name);
 		GD.Print(bombsWarn.Name);
 		smallSizeWarn.Visible = rowsBox.Value * columsBox.Value < 2;
-		bombsWarn.Visible = bombsBox.Value >= rowsBox.Value * columsBox.Value;
+		bombsWarn.Visible = bombsBox.Value >= rowsBox.Value * columsBox.Value - 10;
 	}
 
 	public bool CanPlayCustom()
 	{
-		return rowsBox.Value * columsBox.Value > 2 && bombsBox.Value < rowsBox.Value * columsBox.Value;
+		return rowsBox.Value * columsBox.Value > 2 && bombsBox.Value < rowsBox.Value * columsBox.Value - 10;
 	}
 }
