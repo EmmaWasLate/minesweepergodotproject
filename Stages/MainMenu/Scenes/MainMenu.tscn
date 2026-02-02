@@ -18,7 +18,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Menu" type="MarginContainer" parent="." node_paths=PackedStringArray("baseMenuContainer", "difficultyMenuContainer")]
+[node name="Menu" type="MarginContainer" parent="." node_paths=PackedStringArray("baseMenuContainer", "difficultyMenuContainer", "customDifficultyMenuContainer")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,6 +28,7 @@ grow_vertical = 2
 script = ExtResource("1_upgdd")
 baseMenuContainer = NodePath("BaseMenu")
 difficultyMenuContainer = NodePath("DifficultyMenu")
+customDifficultyMenuContainer = NodePath("CustomDifficultyMenu")
 
 [node name="BaseMenu" type="MarginContainer" parent="Menu"]
 layout_mode = 2
@@ -176,7 +177,6 @@ grow_vertical = 2
 text = "Custom"
 
 [node name="CustomDifficultyMenu" type="MarginContainer" parent="Menu"]
-visible = false
 layout_mode = 2
 
 [node name="Center" type="MarginContainer" parent="Menu/CustomDifficultyMenu"]
@@ -246,6 +246,7 @@ min_value = 2.0
 max_value = 2147483647.0
 value = 10.0
 allow_greater = true
+update_on_text_changed = true
 
 [node name="Label" type="Label" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox"]
 layout_mode = 2
@@ -260,6 +261,7 @@ layout_mode = 2
 min_value = 2.0
 max_value = 2147483647.0
 value = 8.0
+update_on_text_changed = true
 
 [node name="SizeBoxes" type="VBoxContainer" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox"]
 layout_mode = 2
@@ -283,6 +285,7 @@ min_value = 1.0
 max_value = 2147483647.0
 value = 2.0
 rounded = true
+update_on_text_changed = true
 
 [node name="SizeBoxes" type="VBoxContainer" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox2"]
 layout_mode = 2
@@ -293,7 +296,8 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 4
 
-[node name="RowsColumsWarn" type="Label" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/ButtonVBox"]
+[node name="SmallSizeWarn" type="Label" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/ButtonVBox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Rows times columns must be greater then 1"
@@ -302,9 +306,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="BombsWarn" type="Label" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/ButtonVBox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Bombs must be lesser then rows times colums minus 1"
+text = "Bombs must be lesser then rows times colums"
 label_settings = SubResource("LabelSettings_jg1lr")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -335,4 +340,8 @@ text = "Play"
 [connection signal="button_down" from="Menu/DifficultyMenu/Center/HBoxContainer/EasyOption/Button" to="Menu" method="_ButtonDown_SelectDifficulty" binds= [0]]
 [connection signal="button_down" from="Menu/DifficultyMenu/Center/HBoxContainer/MediumOption/Button" to="Menu" method="_ButtonDown_SelectDifficulty" binds= [1]]
 [connection signal="button_down" from="Menu/DifficultyMenu/Center/HBoxContainer/HardOption/Button" to="Menu" method="_ButtonDown_SelectDifficulty" binds= [2]]
+[connection signal="button_down" from="Menu/DifficultyMenu/Center/HBoxContainer/CustomOption/Button" to="Menu" method="_ButtonDown_SelectDifficulty" binds= [3]]
+[connection signal="value_changed" from="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox/RowsBox" to="Menu" method="_ValueChanged_ValuesWarn"]
+[connection signal="value_changed" from="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox/ColumsBox" to="Menu" method="_ValueChanged_ValuesWarn"]
+[connection signal="value_changed" from="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/MainHBox2/BombsBox" to="Menu" method="_ValueChanged_ValuesWarn"]
 [connection signal="button_down" from="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/ButtonVBox/NinePatchRect/Button" to="Menu" method="_ButtonDown_CustomDifficulty"]
