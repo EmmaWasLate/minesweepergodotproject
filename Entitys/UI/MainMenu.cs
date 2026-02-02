@@ -46,6 +46,7 @@ public partial class MainMenu : MarginContainer
 
 	public void _ButtonDown_CustomDifficulty()
 	{
+		if(!CanPlayCustom()) return;
 
 		Vector2I mapSize = new((int)rowsBox.Value,(int)columsBox.Value);
 		Singleton.DifficultyInfo.custom = new(mapSize,(int)bombsBox.Value);
@@ -64,5 +65,10 @@ public partial class MainMenu : MarginContainer
 		GD.Print(bombsWarn.Name);
 		smallSizeWarn.Visible = rowsBox.Value * columsBox.Value < 2;
 		bombsWarn.Visible = bombsBox.Value >= rowsBox.Value * columsBox.Value;
+	}
+
+	public bool CanPlayCustom()
+	{
+		return rowsBox.Value * columsBox.Value > 2 && bombsBox.Value < rowsBox.Value * columsBox.Value;
 	}
 }
