@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://b1hyy5g4usr87"]
 
-[ext_resource type="Script" uid="uid://65yrc48vepk1" path="res://Entitys/UI/MainMenu.cs" id="1_upgdd"]
+[ext_resource type="Script" uid="uid://65yrc48vepk1" path="res://Stages/MainMenu/MainMenu.cs" id="1_upgdd"]
 [ext_resource type="Texture2D" uid="uid://crlpfh48ti1se" path="res://Common/GameTilesets/GroundTile.png" id="2_upgdd"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_upgdd"]
@@ -190,7 +190,7 @@ layout_mode = 2
 
 [node name="NinePatchRect" type="NinePatchRect" parent="Menu/CustomDifficultyMenu/Center/MarginContainer"]
 texture_filter = 1
-custom_minimum_size = Vector2(550, 257.86)
+custom_minimum_size = Vector2(430.455, 255)
 layout_mode = 2
 texture = ExtResource("2_upgdd")
 region_rect = Rect2(0, 0, 16, 16)
@@ -298,6 +298,7 @@ theme_override_constants/separation = 4
 
 [node name="SmallSizeWarn" type="Label" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/ButtonVBox"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Rows times columns must be greater then 1"
@@ -307,6 +308,7 @@ vertical_alignment = 1
 
 [node name="BombsWarn" type="Label" parent="Menu/CustomDifficultyMenu/Center/MarginContainer/NinePatchRect/VBoxContainer/CenterContainer/VBoxContainer/ButtonVBox"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Bombs must be lesser then rows times colums minus 10"

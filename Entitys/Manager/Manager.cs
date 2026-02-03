@@ -3,15 +3,25 @@ using Godot;
 
 public partial class Manager : Node2D
 {
+	public delegate void StopGameEventHandler();
+
 	Random random = new();
-	bool startClick = true;
-	int xOffset;
-	int yOffset;
 	Vector2 offset = new(0, 0);
+	Vector2I mapSize;
 	[Export] public TileMapLayer ground;
 	[Export] public TileMapLayer flags;
-	Vector2I mapSize;
+	
+	bool startClick = true;
+	bool gameRunning = true;
+	int nodesReveled;
+	int xOffset;
+	int yOffset;
 	int bombAmount;
+	float scaling;
+	
+	
+	public event StopGameEventHandler gameWon;
+	public event StopGameEventHandler gameLost;
 
 	int[,] tileInfo = new int[0, 0];
 	public void CreateTileMap()
@@ -49,10 +59,14 @@ public partial class Manager : Node2D
 	{
 		if (ground.GetCellAtlasCoords(tileCoords).Equals(new(0, 0)) && !flags.GetCellAtlasCoords(tileCoords).Equals(new(0, 0)))
 			{
+				nodesReveled++;
+
 				ground.SetCell(tileCoords, 0, new(1, 0));
 				if (tileInfo[tileCoords.X + xOffset, tileCoords.Y + yOffset] == -1)
 				{
 					flags.SetCell(tileCoords, 0, new(9, 0));
+					gameRunning = false;
+					gameLost?.Invoke();
 				} else if (tileInfo[tileCoords.X + xOffset, tileCoords.Y + yOffset] != 0)
 				{
 					flags.SetCell(tileCoords, 0, new(tileInfo[tileCoords.X + xOffset, tileCoords.Y + yOffset], 0));
@@ -66,6 +80,12 @@ public partial class Manager : Node2D
 							RevealNode(tileCoords + ij);
 						}
 					}
+				}
+
+				if (mapSize.X * mapSize.Y - bombAmount == nodesReveled)
+				{
+					gameRunning = false;
+					gameWon?.Invoke();
 				}
 			}
 	}
@@ -170,10 +190,11 @@ public partial class Manager : Node2D
 			offset.Y = .5f;
 		}
      	CreateTileMap();
+		scaling = GetScaling();
     }
 	public override void _Process(double delta)
     {
-		float scaling = GetScaling();
+		if (!gameRunning) return;
         if (Input.IsActionJustPressed("left_mouse"))
 		{
 			Vector2I tileCoords = ground.LocalToMap(offset * 16 + GetGlobalMousePosition() / scaling);

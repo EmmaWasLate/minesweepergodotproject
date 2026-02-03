@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dhlnyrb02fbgr"]
+[gd_scene load_steps=9 format=3 uid="uid://dhlnyrb02fbgr"]
 
 [ext_resource type="Texture2D" uid="uid://crlpfh48ti1se" path="res://Common/GameTilesets/GroundTile.png" id="1_yr7f0"]
 [ext_resource type="Script" uid="uid://dawh0ekn0kbs1" path="res://Entitys/Manager/Manager.cs" id="2_epypp"]
 [ext_resource type="Texture2D" uid="uid://djmp54e8qkat4" path="res://Common/GameTilesets/Flags.png" id="2_v3uv0"]
+[ext_resource type="PackedScene" uid="uid://dp2h8iolu2n4k" path="res://Entitys/UI/Scenes/end_game_interface.tscn" id="4_v3uv0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x5kh0"]
 texture = ExtResource("1_yr7f0")
@@ -41,6 +42,14 @@ texture_filter = 1
 tile_set = SubResource("TileSet_j3vsv")
 
 [node name="manager" type="Node2D" parent="." node_paths=PackedStringArray("ground", "flags")]
+unique_name_in_owner = true
 script = ExtResource("2_epypp")
 ground = NodePath("../Ground")
 flags = NodePath("../Flags")
+
+[node name="End Game Interface" parent="manager" instance=ExtResource("4_v3uv0")]
+
+[connection signal="button_down" from="manager/End Game Interface/Menu/GameOver/Center/NinePatchRect/VBoxContainer/VBoxContainer/Retry/Button" to="manager/End Game Interface/Menu" method="RetryButton"]
+[connection signal="button_down" from="manager/End Game Interface/Menu/GameOver/Center/NinePatchRect/VBoxContainer/VBoxContainer/Return to Menu/Button" to="manager/End Game Interface/Menu" method="MainMenuButton"]
+
+[editable path="manager/End Game Interface"]
