@@ -11,8 +11,11 @@ config_version=5
 [application]
 
 config/name="minesweeper"
+config/version="0.1"
 run/main_scene="uid://b1hyy5g4usr87"
 config/features=PackedStringArray("4.5", "C#", "GL Compatibility")
+boot_splash/bg_color=Color(0.021434652, 0.02143463, 0.021434627, 1)
+boot_splash/show_image=false
 config/icon="uid://fu33gpd2ib3m"
 
 [autoload]
