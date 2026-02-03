@@ -6,6 +6,7 @@ public partial class MainMenu : MarginContainer
 
 	[ExportGroup("BaseMenu")]
 	[Export] public MarginContainer baseMenuContainer;	
+	[Export] public MarginContainer creditsMenuContainer;	
 
 	[ExportGroup("DifficultyMenu")]
 	[Export] public MarginContainer difficultyMenuContainer;
@@ -43,7 +44,6 @@ public partial class MainMenu : MarginContainer
     {
         if (Input.IsActionJustPressed("ui_return") && lastMenu != null && currentMenu != null)
 		{
-			GD.Print("foda");
 			currentMenu.Visible = false;
 			currentMenu = lastMenu;
 			lastMenu = baseMenuContainer;
@@ -54,6 +54,11 @@ public partial class MainMenu : MarginContainer
 	{
 		baseMenuContainer.Visible = false;
 		currentMenu = difficultyMenuContainer;
+	}
+	public void _ButtonDown_CreditsMenu()
+	{
+		baseMenuContainer.Visible = false;
+		currentMenu = creditsMenuContainer;
 	}
 
 	public void _ButtonDown_SelectDifficulty(int difficulty)
@@ -84,8 +89,6 @@ public partial class MainMenu : MarginContainer
 		Label smallSizeWarn = GetNode<Label>("%SmallSizeWarn");
 		Label bombsWarn = GetNode<Label>("%BombsWarn");
 
-		GD.Print(smallSizeWarn.Name);
-		GD.Print(bombsWarn.Name);
 		smallSizeWarn.Visible = rowsBox.Value * columsBox.Value < 2;
 		bombsWarn.Visible = bombsBox.Value >= rowsBox.Value * columsBox.Value - 10;
 	}

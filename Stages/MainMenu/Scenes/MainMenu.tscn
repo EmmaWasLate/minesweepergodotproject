@@ -1,7 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://b1hyy5g4usr87"]
+[gd_scene load_steps=10 format=3 uid="uid://b1hyy5g4usr87"]
 
 [ext_resource type="Script" uid="uid://65yrc48vepk1" path="res://Stages/MainMenu/MainMenu.cs" id="1_upgdd"]
 [ext_resource type="Texture2D" uid="uid://crlpfh48ti1se" path="res://Common/GameTilesets/GroundTile.png" id="2_upgdd"]
+[ext_resource type="Texture2D" uid="uid://fu33gpd2ib3m" path="res://Common/Icon.png" id="3_jg1lr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_j6n5w"]
+font_size = 22
+
+[sub_resource type="LabelSettings" id="LabelSettings_4c71l"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_x6l3b"]
+font_size = 22
+
+[sub_resource type="LabelSettings" id="LabelSettings_35hj0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_upgdd"]
 font_size = 36
@@ -18,7 +29,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Menu" type="MarginContainer" parent="." node_paths=PackedStringArray("baseMenuContainer", "difficultyMenuContainer", "customDifficultyMenuContainer")]
+[node name="Menu" type="MarginContainer" parent="." node_paths=PackedStringArray("baseMenuContainer", "creditsMenuContainer", "difficultyMenuContainer", "customDifficultyMenuContainer")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,8 +38,92 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_upgdd")
 baseMenuContainer = NodePath("BaseMenu")
+creditsMenuContainer = NodePath("CreditsMenu")
 difficultyMenuContainer = NodePath("DifficultyMenu")
 customDifficultyMenuContainer = NodePath("CustomDifficultyMenu")
+
+[node name="CreditsMenu" type="MarginContainer" parent="Menu"]
+visible = false
+layout_mode = 2
+
+[node name="Center" type="MarginContainer" parent="Menu/CreditsMenu"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Menu/CreditsMenu/Center"]
+custom_minimum_size = Vector2(337, 433)
+layout_mode = 2
+texture = ExtResource("2_upgdd")
+region_rect = Rect2(16, 0, 16, 16)
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Menu/CreditsMenu/Center/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -73.0
+offset_right = 73.0
+offset_bottom = 232.0
+grow_horizontal = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/CreditsMenu/Center/NinePatchRect/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Control" type="Control" parent="Menu/CreditsMenu/Center/NinePatchRect/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/CreditsMenu/Center/NinePatchRect/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="ProgrammersTitle" type="Label" parent="Menu/CreditsMenu/Center/NinePatchRect/VBoxContainer2/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Programmers"
+label_settings = SubResource("LabelSettings_j6n5w")
+
+[node name="Programmers" type="Label" parent="Menu/CreditsMenu/Center/NinePatchRect/VBoxContainer2/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Emma
+Isabela"
+label_settings = SubResource("LabelSettings_4c71l")
+
+[node name="ArtistsTitle" type="Label" parent="Menu/CreditsMenu/Center/NinePatchRect/VBoxContainer2/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Artists"
+label_settings = SubResource("LabelSettings_x6l3b")
+
+[node name="Artists" type="Label" parent="Menu/CreditsMenu/Center/NinePatchRect/VBoxContainer2/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Isabela"
+label_settings = SubResource("LabelSettings_35hj0")
+
+[node name="GameDesignTitle" type="Label" parent="Menu/CreditsMenu/Center/NinePatchRect/VBoxContainer2/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "GameDesign"
+label_settings = SubResource("LabelSettings_x6l3b")
+
+[node name="Artists2" type="Label" parent="Menu/CreditsMenu/Center/NinePatchRect/VBoxContainer2/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Emma"
+label_settings = SubResource("LabelSettings_35hj0")
+
+[node name="TextureRect" type="TextureRect" parent="Menu/CreditsMenu/Center/NinePatchRect/VBoxContainer2"]
+custom_minimum_size = Vector2(192, 192)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_jg1lr")
 
 [node name="BaseMenu" type="MarginContainer" parent="Menu"]
 layout_mode = 2
@@ -61,7 +156,7 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "New Game"
 
-[node name="CustomizeTheme" type="NinePatchRect" parent="Menu/BaseMenu/Center/VBoxContainer"]
+[node name="Credits" type="NinePatchRect" parent="Menu/BaseMenu/Center/VBoxContainer"]
 texture_filter = 1
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
@@ -72,14 +167,14 @@ patch_margin_top = 1
 patch_margin_right = 1
 patch_margin_bottom = 1
 
-[node name="Button" type="Button" parent="Menu/BaseMenu/Center/VBoxContainer/CustomizeTheme"]
+[node name="Button" type="Button" parent="Menu/BaseMenu/Center/VBoxContainer/Credits"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Customize Theme"
+text = "Credits"
 
 [node name="DifficultyMenu" type="MarginContainer" parent="Menu"]
 visible = false
@@ -339,7 +434,34 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Play"
 
+[node name="Bottom" type="MarginContainer" parent="Menu"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Left" type="MarginContainer" parent="Menu/Bottom"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/Bottom/Left"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Control" type="Control" parent="Menu/Bottom/Left/HBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/Bottom/Left/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="Menu/Bottom/Left/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Press Q or Esc to return"
+
+[node name="Control" type="Control" parent="Menu/Bottom/Left/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
 [connection signal="button_down" from="Menu/BaseMenu/Center/VBoxContainer/NewGame/Button" to="Menu" method="_ButtonDown_NewGame"]
+[connection signal="button_down" from="Menu/BaseMenu/Center/VBoxContainer/Credits/Button" to="Menu" method="_ButtonDown_CreditsMenu"]
 [connection signal="button_down" from="Menu/DifficultyMenu/Center/HBoxContainer/EasyOption/Button" to="Menu" method="_ButtonDown_SelectDifficulty" binds= [0]]
 [connection signal="button_down" from="Menu/DifficultyMenu/Center/HBoxContainer/MediumOption/Button" to="Menu" method="_ButtonDown_SelectDifficulty" binds= [1]]
 [connection signal="button_down" from="Menu/DifficultyMenu/Center/HBoxContainer/HardOption/Button" to="Menu" method="_ButtonDown_SelectDifficulty" binds= [2]]
