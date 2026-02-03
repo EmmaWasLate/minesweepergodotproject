@@ -13,6 +13,17 @@ public partial class MainMenu : MarginContainer
 	[ExportGroup("CustomDifficultyMenu")]
 	[Export] public MarginContainer customDifficultyMenuContainer;
 
+
+	MarginContainer lastMenu;
+	private MarginContainer _currentMenu;
+	MarginContainer currentMenu {get => _currentMenu; set
+		{
+			lastMenu = currentMenu;
+			_currentMenu = value;
+
+			currentMenu.Visible = true;
+		}}
+
 	string rowsBoxPath = "%RowsBox";
 	string ColumnsBoxPath = "%ColumsBox";
 	string BombsBoxPath = "%BombsBox";
@@ -25,12 +36,24 @@ public partial class MainMenu : MarginContainer
 		rowsBox = GetNode<SpinBox>(rowsBoxPath);
 		columsBox = GetNode<SpinBox>(ColumnsBoxPath);
 		bombsBox = GetNode<SpinBox>(BombsBoxPath);
+
+		currentMenu = baseMenuContainer;
+    }
+    public override void _Process(double delta)
+    {
+        if (Input.IsActionJustPressed("ui_return") && lastMenu != null && currentMenu != null)
+		{
+			GD.Print("foda");
+			currentMenu.Visible = false;
+			currentMenu = lastMenu;
+			lastMenu = baseMenuContainer;
+		}
     }
 
 	public void _ButtonDown_NewGame()
 	{
 		baseMenuContainer.Visible = false;
-		difficultyMenuContainer.Visible = true;
+		currentMenu = difficultyMenuContainer;
 	}
 
 	public void _ButtonDown_SelectDifficulty(int difficulty)
@@ -38,7 +61,7 @@ public partial class MainMenu : MarginContainer
 		if (difficulty == (int)Singleton.Difficulty.custom)
 		{
 			difficultyMenuContainer.Visible = false;
-			customDifficultyMenuContainer.Visible = true;
+			currentMenu = customDifficultyMenuContainer;
 			return;
 		}
 		GetNode<SceneManager>("/root/SceneManager").StartMainLevel((Singleton.Difficulty)difficulty);
