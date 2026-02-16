@@ -18,8 +18,6 @@ public partial class Manager : Node2D
 	int yOffset;
 	int bombAmount;
 	float scaling;
-	
-	
 	public event StopGameEventHandler gameWon;
 	public event StopGameEventHandler gameLost;
 
@@ -35,6 +33,31 @@ public partial class Manager : Node2D
 		}
 
 		PositionTileMap();
+	}
+
+	public void PositionTileMap()
+	{
+		float scaling = GetScaling();
+
+		ground.Scale = new(scaling, scaling);
+		flags.Scale = new(scaling, scaling);
+
+		//Posiciona o tilemap no centro da tela
+		float xPosition = 0;
+		float yPosition = 0;
+
+		if (mapSize.X % 2 != 0)
+		{
+			xPosition -= 0.5f * scaling * 16;
+		}
+
+		if (mapSize.Y % 2 != 0)
+		{
+			yPosition -= 0.5f * scaling * 16;
+		}
+
+		ground.Position = new(xPosition, yPosition);
+		flags.Position = new(xPosition, yPosition);
 	}
 
 	public float GetScaling()
@@ -80,40 +103,16 @@ public partial class Manager : Node2D
 							RevealNode(tileCoords + ij);
 						}
 					}
-				}
-
-				if (mapSize.X * mapSize.Y - bombAmount == nodesReveled)
-				{
-					gameRunning = false;
-					gameWon?.Invoke();
+					if (mapSize.X * mapSize.Y - bombAmount == nodesReveled)
+					{
+						gameRunning = false;
+						gameWon?.Invoke();
+					}
 				}
 			}
 	}
 
-	public void PositionTileMap()
-	{
-		float scaling = GetScaling();
-
-		ground.Scale = new(scaling, scaling);
-		flags.Scale = new(scaling, scaling);
-
-		//Posiciona o tilemap no centro da tela
-		float xPosition = 0;
-		float yPosition = 0;
-
-		if (mapSize.X % 2 != 0)
-		{
-			xPosition -= 0.5f * scaling * 16;
-		}
-
-		if (mapSize.Y % 2 != 0)
-		{
-			yPosition -= 0.5f * scaling * 16;
-		}
-
-		ground.Position = new(xPosition, yPosition);
-		flags.Position = new(xPosition, yPosition);
-	}
+	
 
 	public bool checkForAdjacentBomb (Vector2I bombCoords, Vector2I startCoords)
 	{
